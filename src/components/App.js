@@ -1,6 +1,7 @@
 import React from 'react';
 import { ThemeProvider } from '@material-ui/core/styles';
 import theme from './ui/Theme';
+import { BrowserRouter, Route, Switch } from 'react-router-dom';
 
 import CssBaseline from '@material-ui/core/CssBaseline';
 import Button from '@material-ui/core/Button';
@@ -10,21 +11,20 @@ function App() {
   return (
     <ThemeProvider theme={theme}>
       <CssBaseline />
-      <Header />
-      <h1>Hello world</h1>
-      <Button variant='contained' color='primary'>
-        Hello World
-      </Button>
-      <p>
-        {[...new Array(200)]
-          .map(
-            () => `Cras mattis consectetur purus sit amet fermentum.
-Cras justo odio, dapibus ac facilisis in, egestas eget quam.
-Morbi leo risus, porta ac consectetur ac, vestibulum at eros.
-Praesent commodo cursus magna, vel scelerisque nisl consectetur et.`
-          )
-          .join('\n')}
-      </p>
+      <BrowserRouter>
+        <Header />
+        <Switch>
+          <Route exact path='/' component={() => <div>Home</div>} />
+          <Route exact path='/services' component={() => <div>Services</div>} />
+          <Route exact path='/customsoftware' component={() => <div>Custom Software</div>} />
+          <Route exact path='/mobileapps' component={() => <div>Mobile Apps</div>} />
+          <Route exact path='/websites' component={() => <div>Websites</div>} />
+          <Route exact path='/revolution' component={() => <div>The Revolution</div>} />
+          <Route exact path='/about' component={() => <div>About Us</div>} />
+          <Route exact path='/contact' component={() => <div>Contact Us</div>} />
+          <Route exact path='/estimate' component={() => <div>Estimate</div>} />
+        </Switch>
+      </BrowserRouter>
     </ThemeProvider>
   );
 }
