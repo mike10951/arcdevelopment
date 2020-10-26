@@ -23,6 +23,13 @@ import logo from "../../assets/logo.svg";
 const useStyles = makeStyles(theme => ({
     toolbarMargin: {
         ...theme.mixins.toolbar,
+        marginBottom: "3em",
+        [theme.breakpoints.down("md")]: {
+            marginBottom: "2em",
+        },
+        [theme.breakpoints.down("xs")]: {
+            marginBottom: "1.25em",
+        },
     },
     logo: {
         height: "8em",
@@ -85,10 +92,15 @@ const useStyles = makeStyles(theme => ({
         opacity: 0.7,
     },
     drawerItemSelected: {
-        opacity: 1,
+        "& .MuiListItemText-root": {
+            opacity: 1,
+        },
     },
     drawerItemEstimate: {
         backgroundColor: theme.palette.common.orange,
+    },
+    appbar: {
+        zIndex: theme.zIndex.modal + 1,
     },
 }));
 
@@ -213,6 +225,7 @@ const Header = () => {
                 Free Estimate
             </Button>
             <Menu
+                style={{zIndex: 1302}}
                 keepMounted
                 classes={{
                     paper: classes.menu,
@@ -226,7 +239,7 @@ const Header = () => {
                 elevation={0}>
                 {menuOptions.map((option, i) => (
                     <MenuItem
-                        key={option.selectedIndex}
+                        key={`${option}${i}`}
                         component={Link}
                         to={option.link}
                         classes={{
@@ -254,6 +267,7 @@ const Header = () => {
                 onClose={() => setOpenDrawer(false)}
                 onOpen={() => setOpenDrawer(true)}
                 classes={{paper: classes.drawer}}>
+                <div className={classes.toolbarMargin} />
                 <List disablePadding>
                     {routes.map(option => (
                         <ListItem
@@ -266,10 +280,9 @@ const Header = () => {
                                 setOpenDrawer(false);
                                 setValue(option.activeIndex);
                             }}
-                            selected={value === option.activeIndex}>
-                            <ListItemText
-                                disableTypography
-                                className={value === option.activeIndex ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem}>
+                            selected={value === option.activeIndex}
+                            classes={{selected: classes.drawerItemSelected}}>
+                            <ListItemText disableTypography className={classes.drawerItem}>
                                 {option.name}
                             </ListItemText>
                         </ListItem>
@@ -277,16 +290,14 @@ const Header = () => {
                     <ListItem
                         divider
                         button
-                        className={classes.drawerItemEstimate}
+                        classes={{root: classes.drawerItemEstimate, selected: classes.drawerItemSelected}}
                         component={Link}
                         to="/estimate"
                         onClick={() => {
                             setOpenDrawer(false);
                             setValue(5);
                         }}>
-                        <ListItemText
-                            disableTypography
-                            className={value === 5 ? [classes.drawerItem, classes.drawerItemSelected] : classes.drawerItem}>
+                        <ListItemText disableTypography className={classes.drawerItem}>
                             Free Estimate
                         </ListItemText>
                     </ListItem>
@@ -302,7 +313,7 @@ const Header = () => {
         <React.Fragment>
             <ElevationScroll>
                 {/* Notice that position is set to "sticky". CssBaseline is necessary; otherwise, text would be hidden behind the AppBar component. */}
-                <AppBar position="sticky" color="primary">
+                <AppBar position="sticky" color="primary" className={classes.appbar}>
                     <Toolbar disableGutters>
                         <Button className={classes.logoContainer} component={Link} to="/" onClick={() => setValue(0)} disableRipple>
                             <img src={logo} alt="company logo" className={classes.logo} />

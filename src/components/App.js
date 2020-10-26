@@ -1,10 +1,10 @@
-import React from "react"
-import {ThemeProvider} from "@material-ui/core/styles"
-import theme from "./ui/Theme"
-import {BrowserRouter, Route, Switch} from "react-router-dom"
+import React from "react";
+import {ThemeProvider} from "@material-ui/core/styles";
+import theme from "./ui/Theme";
+import {BrowserRouter, Route, Switch} from "react-router-dom";
 
-import CssBaseline from "@material-ui/core/CssBaseline"
-import Header from "./ui/Header"
+import CssBaseline from "@material-ui/core/CssBaseline";
+import Header from "./ui/Header";
 
 function App() {
     return (
@@ -25,7 +25,7 @@ function App() {
                 </Switch>
             </BrowserRouter>
         </ThemeProvider>
-    )
+    );
 }
 
-export default App
+export default App;
