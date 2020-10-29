@@ -1,3 +1,4 @@
+/* eslint-disable react/prop-types */
 import React, {useState, useEffect} from "react";
 import AppBar from "@material-ui/core/AppBar";
 import Toolbar from "@material-ui/core/Toolbar";
@@ -104,16 +105,14 @@ const useStyles = makeStyles(theme => ({
     },
 }));
 
-const Header = () => {
+const Header = ({value, setValue, selectedIndex, setSelectedIndex}) => {
     const classes = useStyles();
     const theme = useTheme();
     const iOS = process.browser && /iPad|iPhone|iPod/.test(navigator.userAgent);
     const matches = useMediaQuery(theme.breakpoints.down("md"));
 
-    const [value, setValue] = useState(0);
     const [anchorEl, setanchorEl] = useState(null);
     const [openMenu, setOpenMenu] = useState(false);
-    const [selectedIndex, setSelectedIndex] = useState(0);
     const [openDrawer, setOpenDrawer] = useState(false);
 
     const handleChange = (e, newValue) => {
@@ -204,7 +203,7 @@ const Header = () => {
                     break;
             }
         });
-    }, [value, menuOptions, selectedIndex, routes]);
+    }, [value, menuOptions, selectedIndex, routes, setSelectedIndex, setValue]);
     const tabs = (
         <React.Fragment>
             <Tabs className={classes.tabContainer} value={value} onChange={handleChange} indicatorColor="primary">
